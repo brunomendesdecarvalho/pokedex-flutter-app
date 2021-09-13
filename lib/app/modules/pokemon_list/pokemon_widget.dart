@@ -48,6 +48,8 @@ class _PokemonWidgetState
                                 style: TextStyle(color: Colors.black, fontSize: 20),
                               ),
                             ),
+                            Spacer(),
+                            Icon(Icons.arrow_forward_ios)
                           ]),
                         ),
                         SizedBox(width: 16)

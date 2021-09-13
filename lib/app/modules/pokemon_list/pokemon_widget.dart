@@ -36,17 +36,20 @@ class _PokemonWidgetState
                     return Column(
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Row(children: [
-                          Image.network(controller.getImageUrl(controller.getPokemonNumber(index)), width: 100, height: 100,),
-                          Spacer(),
-                          Container(
-                            height: 24,
-                            child: Text(
-                              '#${controller.getPokemonNumber(index)} - ${controller.getName(index)}',
-                              style: TextStyle(color: Colors.black, fontSize: 20),
+                        InkWell(
+                          onTap: () {},
+                          child: Row(children: [
+                            Image.network(controller.getImageUrl(controller.getPokemonNumber(index)), width: 100, height: 100,),
+                            Spacer(),
+                            Container(
+                              height: 24,
+                              child: Text(
+                                '#${controller.getPokemonNumber(index)} - ${controller.getName(index)}',
+                                style: TextStyle(color: Colors.black, fontSize: 20),
+                              ),
                             ),
-                          ),
-                        ]),
+                          ]),
+                        ),
                         SizedBox(width: 16)
                       ],
                     );

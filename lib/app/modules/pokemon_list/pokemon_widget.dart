@@ -17,11 +17,12 @@ class _PokemonWidgetState
   @override
   void initState() {
     super.initState();
-    controller.checkPokemons();
   }
 
   @override
   Widget build(BuildContext context) {
+    var gen = ModalRoute.of(context)!.settings.arguments as int;
+    controller.checkPokemons(gen);
     return SafeArea(
       child: Scaffold(
         // canPop: true,
@@ -39,13 +40,20 @@ class _PokemonWidgetState
                         InkWell(
                           onTap: () {},
                           child: Row(children: [
-                            Image.network(controller.getImageUrl(controller.getPokemonNumber(index)), width: 100, height: 100,),
+                            Image.network(
+                              controller.getImageUrl(
+                                  controller.getPokemonNumberString(
+                                      controller.getPokemonNumber(gen, index))),
+                              width: 100,
+                              height: 100,
+                            ),
                             Spacer(),
                             Container(
                               height: 24,
                               child: Text(
-                                '#${controller.getPokemonNumber(index)} - ${controller.getName(index)}',
-                                style: TextStyle(color: Colors.black, fontSize: 20),
+                                '#${controller.getPokemonNumberString(controller.getPokemonNumber(gen, index))} - ${controller.getName(index)}',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 20),
                               ),
                             ),
                             Spacer(),
@@ -64,6 +72,4 @@ class _PokemonWidgetState
       ),
     );
   }
-
-
 }

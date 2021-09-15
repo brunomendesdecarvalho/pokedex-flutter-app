@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:pokeapi/app/modules/home_page/home_page_widget.dart';
 import 'package:pokeapi/core/network/api_routes.dart';
 import 'package:pokeapi/core/network/router.dart';
 
@@ -16,6 +17,7 @@ class AppModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ModuleRoute('/', module: PokemonModule()),
+    ModuleRoute('/pokemon-list', module: PokemonModule()),
+    ChildRoute('/', child: (_, args) => HomePageWidget())
   ];
 }

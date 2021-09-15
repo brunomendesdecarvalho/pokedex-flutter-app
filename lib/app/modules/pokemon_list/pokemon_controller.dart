@@ -5,19 +5,19 @@ import 'package:pokeapi/core/helpers/functions.dart';
 import 'package:pokeapi/core/models/pokemon.dart';
 import 'package:rx_notifier/rx_notifier.dart';
 
-class PokemonController extends Disposable{
+class PokemonController extends Disposable {
   final statePokemon = RxNotifier<RequestState>(RequestState.IDLE);
   final pokemonList = RxList<Pokemon>([]);
   final PokemonRepository repository;
 
   PokemonController({required this.repository});
 
-  void checkPokemons() {
+  void checkPokemons(int gen) {
     statePokemon.value = RequestState.LOADING;
     Functions.storeMethod(
         body: () async {
-          var result = await repository.fetchPokemons();
-          if(pokemonList.isNotEmpty) {
+          var result = await repository.fetchPokemons(gen);
+          if (pokemonList.isNotEmpty) {
             pokemonList.clear();
           }
           pokemonList.addAll(result);
@@ -29,17 +29,34 @@ class PokemonController extends Disposable{
   }
 
   String getName(int index) {
-    return this.pokemonList[index].name!.substring(0,1).toUpperCase() + this.pokemonList[index].name!.substring(1).toLowerCase();
+    String name = this.pokemonList[index].name!.substring(0, 1).toUpperCase() +
+        this.pokemonList[index].name!.substring(1).toLowerCase();
+    List<String> nameParts = [];
+    if (name.contains('-')) {
+      nameParts = name.split('-');
+      if (nameParts[0] != 'Mr' && nameParts[0] != 'Ho') {
+        name = nameParts[0];
+      } else if (name.split('-')[0] == 'Mr') {
+        name = nameParts[0] +
+            '. ' +
+            nameParts[1].substring(0, 1).toUpperCase() +
+            nameParts[1].substring(1).toLowerCase();
+      } else {
+        name = nameParts[0] +
+            '-' +
+            nameParts[1].substring(0, 1).toUpperCase() +
+            nameParts[1].substring(1).toLowerCase();
+      }
+    }
+    return name;
   }
 
-  String getPokemonNumber(int index) {
-    if(index < 9) {
+  String getPokemonNumberString(int index) {
+    if (index < 9) {
       return '00' + (index + 1).toString();
-    }
-    else if(index >= 9 && index < 99) {
+    } else if (index >= 9 && index < 99) {
       return '0' + (index + 1).toString();
-    }
-    else {
+    } else {
       return (index + 1).toString();
     }
   }
@@ -47,6 +64,36 @@ class PokemonController extends Disposable{
   String getImageUrl(String pkmnNumber) {
     String baseUrl = 'https://www.serebii.net/pokemongo/pokemon/';
     return baseUrl + pkmnNumber + '.png';
+  }
+
+  int getPokemonNumber(int gen, int index) {
+    switch (gen) {
+      case 1:
+        return index;
+
+      case 2:
+        return index + 151;
+
+      case 3:
+        return index + 251;
+
+      case 4:
+        return index + 386;
+
+      case 5:
+        return index + 493;
+
+      case 6:
+        return index + 649;
+
+      case 7:
+        return index + 721;
+
+      case 8:
+        return index + 809;
+      default:
+        return index;
+    }
   }
 
   @override

@@ -1,10 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:pokeapi/app/modules/pokemon_list/pokemon_controller.dart';
-import 'package:pokeapi/app/modules/pokemon_list/pokemon_repository.dart';
-import 'package:pokeapi/app/modules/pokemon_list/pokemon_widget.dart';
-import 'package:pokeapi/core/network/api_routes.dart';
-import 'package:pokeapi/core/network/router.dart';
 
+import '../../../core/network/api_routes.dart';
+import '../../../core/network/router.dart';
+
+import 'pokemon_controller.dart';
+import 'pokemon_repository.dart';
+import 'pokemon_widget.dart';
 
 class PokemonModule extends Module {
   @override

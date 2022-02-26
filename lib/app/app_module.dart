@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:pokeapi/app/modules/home_page/home_page_widget.dart';
-import 'package:pokeapi/core/network/api_routes.dart';
-import 'package:pokeapi/core/network/router.dart';
 
+import '../core/network/api_routes.dart';
+import '../core/network/router.dart';
+import 'modules/home_page/home_page_widget.dart';
 import 'modules/pokemon_list/pokemon_controller.dart';
 import 'modules/pokemon_list/pokemon_module.dart';
 import 'modules/pokemon_list/pokemon_repository.dart';

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:pokeapi/core/models/pokemon.dart';
 import 'package:pokeapi/core/network/api_routes.dart';
 import 'package:pokeapi/core/network/router.dart';

@@ -1,9 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:pokeapi/app/modules/pokemon_list/pokemon_repository.dart';
-import 'package:pokeapi/core/enums/request_state.dart';
-import 'package:pokeapi/core/helpers/functions.dart';
-import 'package:pokeapi/core/models/pokemon.dart';
 import 'package:rx_notifier/rx_notifier.dart';
+
+import '../../../core/enums/request_state.dart';
+import '../../../core/helpers/functions.dart';
+import '../../../core/models/pokemon.dart';
+
+import 'pokemon_repository.dart';
 
 class PokemonController extends Disposable {
   final statePokemon = RxNotifier<RequestState>(RequestState.IDLE);
@@ -31,23 +33,6 @@ class PokemonController extends Disposable {
   String getName(int index) {
     String name = this.pokemonList[index].name!.substring(0, 1).toUpperCase() +
         this.pokemonList[index].name!.substring(1).toLowerCase();
-    List<String> nameParts = [];
-    if (name.contains('-')) {
-      nameParts = name.split('-');
-      if (nameParts[0] != 'Mr' && nameParts[0] != 'Ho') {
-        name = nameParts[0];
-      } else if (name.split('-')[0] == 'Mr') {
-        name = nameParts[0] +
-            '. ' +
-            nameParts[1].substring(0, 1).toUpperCase() +
-            nameParts[1].substring(1).toLowerCase();
-      } else {
-        name = nameParts[0] +
-            '-' +
-            nameParts[1].substring(0, 1).toUpperCase() +
-            nameParts[1].substring(1).toLowerCase();
-      }
-    }
     return name;
   }
 

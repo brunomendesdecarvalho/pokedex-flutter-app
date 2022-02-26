@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:pokeapi/app/modules/pokemon_list/pokemon_controller.dart';
-import 'package:pokeapi/core/widgets/loader_widget.dart';
 import 'package:rx_notifier/rx_notifier.dart';
+
+import '../../../core/widgets/loader_widget.dart';
+
+import 'pokemon_controller.dart';
 
 class PokemonWidget extends StatefulWidget {
   const PokemonWidget({Key? key}) : super(key: key);
@@ -21,46 +23,43 @@ class _PokemonWidgetState
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
     var gen = ModalRoute.of(context)!.settings.arguments as int;
     controller.checkPokemons(gen);
-    return SafeArea(
-      child: Scaffold(
-        // canPop: true,
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(left: width * .01, right: width * .015),
           child: RxBuilder(builder: (_) {
             return ListView.builder(
-                // scrollDirection: Axis.vertical,
                 itemCount: controller.pokemonList.length,
                 itemBuilder: (context, index) {
                   if (controller.pokemonList.isNotEmpty) {
                     return Column(
-                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         InkWell(
                           onTap: () {},
                           child: Row(children: [
                             Image.network(
-                              controller.getImageUrl(
-                                  controller.getPokemonNumberString(
-                                      controller.getPokemonNumber(gen, index))),
-                              width: 100,
-                              height: 100,
-                            ),
+                                controller.getImageUrl(
+                                    controller.getPokemonNumberString(controller
+                                        .getPokemonNumber(gen, index))),
+                                width: width * .25),
                             Spacer(),
                             Container(
-                              height: 24,
+                              width: width * .6,
                               child: Text(
                                 '#${controller.getPokemonNumberString(controller.getPokemonNumber(gen, index))} - ${controller.getName(index)}',
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 20),
+                                overflow: TextOverflow.clip,
                               ),
                             ),
                             Spacer(),
                             Icon(Icons.arrow_forward_ios)
                           ]),
                         ),
-                        SizedBox(width: 16)
                       ],
                     );
                   } else {
